@@ -15,7 +15,8 @@ end
 #
 # Example:
 #
-# composite?(9)     # => true
+
+# composite?(9)     # => truegit 
 # composite?(13)    # => false
 def composite?(num)
 
