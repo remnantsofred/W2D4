@@ -1,21 +1,37 @@
 # Write a method, least_common_multiple, that takes in two numbers and returns the smallest number that is a mutiple
 # of both of the given numbers
 def least_common_multiple(num_1, num_2)
-
+    nums = [num_1, num_2]
+    i = nums.min
+    while i > 0
+        return i if i % num_1 == 0 && i % num_2 == 0
+        i += 1
+    end
 end
 
 
 # Write a method, most_frequent_bigram, that takes in a string and returns the two adjacent letters that appear the
 # most in the string.
-def most_frequent_bigram(str)
 
+def most_frequent_bigram(str)
+    count = Hash.new(0)
+    i = 0
+    while i < str.length - 1
+        count[str[i] + str[i+1]] += 1
+        i += 1
+    end
+
+    sorted = count.sort_by { |k,v| v }
+    sorted[-1][0]
 end
 
 
 class Hash
     # Write a method, Hash#inverse, that returns a new hash where the key-value pairs are swapped
     def inverse
-
+        inverse = Hash.new
+        self.each { |k,v| inverse[v] = k } 
+        inverse
     end
 end
 
@@ -23,7 +39,15 @@ end
 class Array
     # Write a method, Array#pair_sum_count, that takes in a target number returns the number of pairs of elements that sum to the given target
     def pair_sum_count(num)
-
+        sum_count = 0
+        self.each_with_index do |ele1, i|
+            self.each_with_index do |ele2, j|
+                if j > i && ele1 + ele2 == num
+                    sum_count += 1
+                end
+            end
+        end
+        sum_count
     end
 
     # Write a method, Array#bubble_sort, that takes in an optional proc argument.
@@ -40,6 +64,24 @@ class Array
     #
     # This should remind you of the spaceship operator! Convenient :)
     def bubble_sort(&prc)
-
+       
+        sorted = false
+        while !sorted 
+            sorted = true
+            (0...self.length - 1).each do |i|
+                if !prc 
+                    if self[i] > self[i+1]
+                        self[i], self[i+1] = self[i+1], self[i]
+                        sorted = false
+                    end
+                elsif prc
+                    if prc.call(self[i], self[i+1]) == 1
+                        self[i], self[i+1] = self[i+1], self[i]
+                        sorted = false
+                    end
+                end
+            end
+        end
+        self
     end
 end
